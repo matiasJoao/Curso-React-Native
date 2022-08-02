@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { StyleSheet, Text, View, Button, TextInput, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, Button, TextInput, ScrollView, FlatList } from 'react-native';
 
 export default function App() {
   const [text, setTextInput] = useState('');
@@ -9,7 +9,7 @@ export default function App() {
   };
   function buttonHandler() {
     setList((currentList) => [
-      ...currentList, text,
+      ...currentList, {Data: text, id: Math.random().toString()},
     ]);
   };
 
@@ -20,13 +20,14 @@ export default function App() {
         <Button color='#98bf64' onPress={buttonHandler} title='add to list' />
       </View>
       <View style={styles.listContainer}>
-        <ScrollView>
-          {list.map((toDo) =>
-            <View style={styles.ListMapContainer} key={toDo}>
-              <Text style={styles.textList}>{toDo}</Text>
-            </View>
-          )}
-        </ScrollView>
+        <FlatList data={list} renderItem={(listData)=>{
+          return <View style={styles.ListMapContainer}>
+                      <Text style={styles.textList}>{listData.item.Data}</Text>
+                </View>
+        }}
+        keyExtractor={(item, index)=>{
+          return item.id
+        }}/>
       </View>
     </View>
   );
@@ -43,7 +44,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   textInputStyle: {
-    borderBottomWidth: 1,
+    borderBottomWidth: 0.7,
     borderColor: 'black',
     margin: '1.2%',
     textAlign: 'center',
