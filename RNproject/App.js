@@ -1,28 +1,29 @@
 import { useState } from 'react';
-import { StyleSheet, View, Button, TextInput, FlatList } from 'react-native';
+import { StyleSheet, View, FlatList } from 'react-native';
 import GoalItem from './components/item';
+import GoalInput from './components/input'
+
 
 export default function App() {
-  const [text, setTextInput] = useState('');
   const [list, setList] = useState([]);
-  function getTextInput(textRecive) {
-    setTextInput(textRecive)
-  };
-  function buttonHandler() {
+
+  function buttonHandler(text) {
     setList((currentList) => [
       ...currentList, {Data: text, id: Math.random().toString()},
     ]);
   };
+  function deleteHandler(id){
+    setList(currentList =>{
+      return currentList.filter((item) => item.id !== id)
+    })
+  };
 
   return (
     <View style={styles.container}>
-      <View style={styles.inputContainer}>
-        <TextInput style={styles.textInputStyle} onChangeText={getTextInput} placeholder='What do you want to do?' />
-        <Button color='#98bf64' onPress={buttonHandler} title='add to list' />
-      </View>
+      <GoalInput addGoal={buttonHandler}  />
       <View style={styles.listContainer}>
         <FlatList data={list} renderItem={(listData)=>{
-          return <GoalItem  text={listData.item.Data}/>
+          return <GoalItem  text={listData.item.Data} deleteItem={deleteHandler} id={listData.item.id}/>
         }}
         keyExtractor={(item, index)=>{
           return item.id
@@ -38,16 +39,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#ebf3e7',
   },
-  inputContainer: {
-    flexDirection: 'column',
-    justifyContent: 'center',
-  },
-  textInputStyle: {
-    borderBottomWidth: 0.7,
-    borderColor: 'black',
-    margin: '1.2%',
-    textAlign: 'center',
-  },
+ 
   listContainer: {
     flexDirection: 'column',
     justifyContent: 'center',
