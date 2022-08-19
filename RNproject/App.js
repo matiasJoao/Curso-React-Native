@@ -1,16 +1,24 @@
 import { useState } from 'react';
-import { StyleSheet, View, FlatList } from 'react-native';
+import { StyleSheet, View, FlatList, Button, StatusBar} from 'react-native';
 import GoalItem from './components/item';
 import GoalInput from './components/input'
 
 
 export default function App() {
   const [list, setList] = useState([]);
+  const[modal, setModal] = useState(false);
 
+  function ModalVisibility(){
+    setModal(true);
+  }
+  function ModalVisibilityCancel(){
+    setModal(false);
+  }
   function buttonHandler(text) {
     setList((currentList) => [
       ...currentList, {Data: text, id: Math.random().toString()},
     ]);
+    ModalVisibilityCancel();
   };
   function deleteHandler(id){
     setList(currentList =>{
@@ -19,8 +27,11 @@ export default function App() {
   };
 
   return (
+    <>
+    <StatusBar style='auto' />
     <View style={styles.container}>
-      <GoalInput addGoal={buttonHandler}  />
+      <Button color='#98bf64' onPress={ModalVisibility} title='Start List'/>
+      <GoalInput visibleCancel={ModalVisibilityCancel} visible={modal} addGoal={buttonHandler}  />
       <View style={styles.listContainer}>
         <FlatList data={list} renderItem={(listData)=>{
           return <GoalItem  text={listData.item.Data} deleteItem={deleteHandler} id={listData.item.id}/>
@@ -30,6 +41,7 @@ export default function App() {
         }}/>
       </View>
     </View>
+    </>
   );
 }
 

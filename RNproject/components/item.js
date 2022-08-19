@@ -20,6 +20,7 @@ const styles = StyleSheet.create({
         borderWidth: 1.2,
         borderColor: '#728c69',
         borderRadius: 7,
+        backgroundColor: '#ebf3e7',
       },
       iphoneFeedback: {
         opacity: 0.5
