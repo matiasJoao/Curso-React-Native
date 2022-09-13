@@ -9,7 +9,7 @@
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#ebf3e7"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -18,12 +18,16 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "Matias.joao.RNproject", 
+      "buildNumber": "1.0.0" 
     },
     "android": {
+      "package": "Matias.joao.RNproject",
+      "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
+        "backgroundColor": "#ebf3e7"
       }
     },
     "web": {
